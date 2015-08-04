@@ -2,17 +2,24 @@
 
 namespace Pizza;
 
-use Zend\EventManager\EventInterface;
-use Zend\ModuleManager\Feature\BootstrapListenerInterface;
+use Zend\ModuleManager\Feature\ConfigProviderInterface;
+use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 
-class Module implements BootstrapListenerInterface
+class Module implements ConfigProviderInterface, AutoloaderProviderInterface
 {
-    public function onBootstrap(EventInterface $e)
+    public function getConfig()
     {
-        echo '<div class="container">';
-        echo '    <div class="hero-unit">';
-        echo '        <h1>Hello Pizza!</h1>';
-        echo '    </div>';
-        echo '</div>';
+        return include __DIR__ . '/config/module.config.php';
+    }
+
+    public function getAutoloaderConfig()
+    {
+        return array(
+            'Zend\Loader\StandardAutoloader' => array(
+                'namespaces' => array(
+                    __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
+                ),
+            ),
+        );
     }
 }
