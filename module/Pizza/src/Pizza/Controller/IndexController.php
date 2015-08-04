@@ -25,4 +25,13 @@ class IndexController extends AbstractActionController
             'pizzaList' => $pizzaList,
         ));
     }
+
+    public function nameAction()
+    {
+        $pizzaName = $this->params()->fromRoute('name');
+
+        return new ViewModel(array(
+            'pizzaName' => $pizzaName,
+        ));
+    }
 }
